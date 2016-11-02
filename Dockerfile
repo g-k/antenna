@@ -24,6 +24,7 @@ EXPOSE $PORT
 
 CMD gunicorn \
     --workers=1 \
+# only 1?
     --worker-connections=4 \
     --worker-class=gevent \
     --bind 0.0.0.0:$PORT \

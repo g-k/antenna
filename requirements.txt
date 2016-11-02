@@ -1,3 +1,5 @@
+# whats with all the hashes? different compile targets?
+
 # Production requirements
 everett==0.3.1 \
     --hash=sha256:b0481647a79f1b89bce07a87e7dd06c22be4a6e2e3d3b3933ef41485e2c2f880 \

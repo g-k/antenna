@@ -86,6 +86,7 @@ class S3Connection(RequiredConfigMixin):
         self.bucket = self.config('bucket_name')
         self.client = self._build_client()
 
+        # +1, I dig this pattern
         if not no_verify:
             # This will throw an exception on startup if things aren't right. The
             # thinking being that it's better to crash at startup rather than get
@@ -125,6 +126,7 @@ class S3Connection(RequiredConfigMixin):
 
     def _create_bucket(self):
         # NOTE(willkg): Don't use this except with fakes3 and dev environments.
+        # should this have a stronger assertion than a comment?
         self.client.create_bucket(Bucket=self.bucket)
 
     def check_health(self, state):

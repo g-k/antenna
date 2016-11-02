@@ -15,6 +15,7 @@ def get_file(fn):
 
 # FIXME: This requires the requirements in requirements.txt, but we need to
 # pull that in without the hashes.
+# ^ can probably reuse find_install_requires() from socorro or socorrolib
 
 setup(
     name='antenna',

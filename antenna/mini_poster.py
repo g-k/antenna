@@ -58,6 +58,7 @@ def multipart_encode(raw_crash, boundary=None):
         'Content-Type': 'multipart/form-data; boundary=%s' % boundary,
     }
 
+    # sorted for human readability?
     for key, val in sorted(raw_crash.items()):
         block = [
             '--%s' % boundary

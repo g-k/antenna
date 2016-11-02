@@ -390,6 +390,15 @@ class HeartbeatResource:
         # traverse passing along the HealthState instance. Then, after
         # traversing the object graph, we'll tally everything up and deliver
         # the news.
+        #
+        # it took me a while to figure out what was going on, probably because
+        # I was working up from the check_health calls in connection and
+        # storage classes. It's kind of shaped like `reduce` but I couldn't
+        # see it through the objects and method calls
+        #
+        # I'm pretty sure this is just a stylistic choice and I'm
+        # anticipating something less OO like `statsd, errors = [(),()]``
+        # with the method logic moved into the HeartbeatResource methods
         for name, resource in self.antenna_app._all_resources.items():
             if hasattr(resource, 'check_health'):
                 resource.check_health(state)
@@ -410,6 +419,8 @@ class AntennaAPI(falcon.API):
         self._all_resources = {}
 
     def unhandled_exception_handler(self, ex, req, resp, params):
+        # strong recommendation for sentry integration here
+
         # FIXME(willkg): Falcon 1.1 makes error handling better, so we should rewrite
         # this then.
 
@@ -423,9 +434,14 @@ class AntennaAPI(falcon.API):
         self._all_resources[name] = resource
         super().add_route(uri_template, resource, *args, **kwargs)
 
+    # this and get_resources need some explanation
+    # since it's not part of the base API it must exist for
+    # application specific stuff, tests, etc. that could be documented
     def get_resource_by_name(self, name):
         return self._all_resources[name]
 
+    # I don't think this is used anywhere
+    # HeartbeatResource iterates over the private var directly
     def get_resources(self):
         return self._all_resources.values()
 

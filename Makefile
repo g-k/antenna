@@ -19,7 +19,12 @@ help:
 # Dev configuration steps
 .docker-build:
 	make build
+	# why not a no-op with 'build' as the dep?
+	# why is this an alias to a PHONY target that actually creates this target?
 
+# this make target displays a warning when invoked
+#   WARNING: The ANTENNA_ENV variable is not set. Defaulting to a blank string.
+# maybe an explicitly empty var is better than a warning and implict empty
 build:
 	${DC} build deploy-base
 	${DC} build dev-base

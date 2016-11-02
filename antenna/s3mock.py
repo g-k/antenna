@@ -11,6 +11,8 @@ a separate library.
 
 """
 
+# like loggingmock, +1 to lifting
+
 import io
 import os
 

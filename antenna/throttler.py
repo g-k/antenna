@@ -88,6 +88,7 @@ class Throttler(RequiredConfigMixin):
                     return REJECT, None
 
                 random_number = random.random() * 100.0
+                # suggest using expanded if else form here
                 response = DEFER if random_number > rule.percentage else ACCEPT
                 return response, rule.percentage
 
@@ -163,7 +164,14 @@ class Rule:
 
         return False
 
-
+# docstring plz
+#
+# I find this name ambiguous because the other 'match' is a method to
+# execute a match function, and I intuited this as a reducer or similar
+# that executed a collection of rules.
+#
+# Consider renaming. something like `always_match`,
+# `return_true`, or `we_have_the_facts_and_we_are_voting_yes()`
 def match_all(crash):
     return True
 
@@ -173,7 +181,9 @@ accept_all = [
     Rule('accept_everything', '*', match_all, 100)
 ]
 
-
+# reading the list is unpleasant because they are long and either wrap weird or
+# require extra eye tracking. I think you've chosen the lesser of the two
+# inconveniences. Could also move those lambdas out but thats would require cross referencing and thats the worst.
 mozilla_rules = [
     # Drop browser side of all multi-submission hang crashes
     Rule('has_hangid_and_browser', '*', lambda d: 'HangID' in d and d.get('ProcessType', 'browser') == 'browser', None),

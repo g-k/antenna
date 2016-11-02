@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 class CrashStorageBase:
     """Crash storage base class"""
     def __init__(self, config):
-        pass
+        pass #  why is config unused?
 
     def save_raw_crash(self, raw_crash, dumps, crash_id):
         """Saves the raw crash and related dumps
